@@ -1,0 +1,913 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Самат Эркебаев — Архитектор Цифрового Будущего</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+  <style>
+    :root {
+      --primary-color: #1a1a1a;
+      --accent-color: #d4a017;
+      --text-color: #ffffff;
+      --secondary-text: #b0b0b0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #000; /* Черный фон для звездного неба */
+      color: var(--text-color);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #starfield {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1; /* Фон за контентом */
+    }
+
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(26, 26, 26, 0.95);
+      padding: 15px 20px;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-logo-img {
+      max-height: 40px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .hamburger {
+      font-size: 1.8rem;
+      color: var(--text-color);
+      cursor: pointer;
+    }
+
+    .nav-menu {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 20px;
+      background: rgba(26, 26, 26, 0.95);
+      padding: 20px;
+      border-radius: 5px;
+      flex-direction: column;
+      gap: 10px;
+      list-style: none;
+    }
+
+    .nav-menu.active {
+      display: flex;
+    }
+
+    .nav-menu li a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .nav-menu li a:hover {
+      color: var(--accent-color);
+    }
+
+    section {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      max-width: 600px;
+    }
+
+    .hero img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      object-fit: cover;
+      border: 3px solid var(--accent-color);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--accent-color);
+      color: var(--primary-color);
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 600;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px var(--accent-color);
+    }
+
+    .details-btn {
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      margin-top: 10px;
+    }
+
+    .about, .skills, .projects, .achievements, .photos, .testimonials, .contact {
+      margin-top: 40px;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      text-align: center;
+      color: var(--accent-color);
+    }
+
+    .about-grid, .skills-grid, .projects-grid, .achievements-grid, .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      text-align: center;
+    }
+
+    .about-card, .skill-card, .project-card, .achievement-card, .testimonial-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      transition: transform 0.3s;
+    }
+
+    .about-card:hover, .skill-card:hover, .project-card:hover, .achievement-card:hover, .testimonial-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .about-card .details, .skill-card .details, .project-card .details, .achievement-card .details, .testimonial-card .details {
+      display: none;
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: var(--secondary-text);
+      text-align: left;
+    }
+
+    .project-card p.tech, .achievement-card p.context {
+      font-size: 0.85rem;
+      color: var(--secondary-text);
+      margin-top: 8px;
+    }
+
+    .swiper-container {
+      width: 100%;
+      max-width: 1200px;
+      padding: 20px 0;
+      margin: 0 auto;
+    }
+
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .swiper-slide img {
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+      max-height: 80vh;
+    }
+
+    .swiper-slide-caption {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: var(--secondary-text);
+    }
+
+    .contact form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .contact input, .contact textarea {
+      padding: 15px;
+      border: none;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-color);
+      font-size: 1rem;
+    }
+
+    .contact textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .social-links a {
+      color: var(--text-color);
+      font-size: 1.5rem;
+      transition: color 0.3s, transform 0.3s;
+    }
+
+    .social-links a:hover {
+      color: var(--accent-color);
+      transform: scale(1.2);
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+        max-width: 90%;
+      }
+
+      .hero img {
+        width: 150px;
+        height: 150px;
+      }
+
+      .nav-logo-img {
+        max-height: 30px;
+      }
+
+      section {
+        padding: 60px 15px;
+      }
+
+      .about-grid, .skills-grid, .projects-grid, .achievements-grid, .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .swiper-slide img {
+        max-width: 90%;
+        max-height: 60vh;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+
+      h2 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="starfield"></canvas>
+  <script type="text/javascript">
+    var gk_isXlsx = false;
+    var gk_xlsxFileLookup = {};
+    var gk_fileData = {};
+    function filledCell(cell) {
+      return cell !== '' && cell != null;
+    }
+    function loadFileData(filename) {
+      if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+        try {
+          var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+          var firstSheetName = workbook.SheetNames[0];
+          var worksheet = workbook.Sheets[firstSheetName];
+          var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+          var filteredData = jsonData.filter(row => row.some(filledCell));
+          var headerRowIndex = filteredData.findIndex((row, index) =>
+            row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+          );
+          if (headerRowIndex === -1 || headerRowIndex > 25) {
+            headerRowIndex = 0;
+          }
+          var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+          csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+          return csv;
+        } catch (e) {
+          console.error(e);
+          return "";
+        }
+      }
+      return gk_fileData[filename] || "";
+    }
+  </script>
+  <script>
+    // Starfield animation
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function createStar() {
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.5 + 0.5,
+        speedX: (Math.random() - 0.5) * 0.5,
+        speedY: (Math.random() - 0.5) * 0.5,
+        opacity: Math.random() * 0.5 + 0.3
+      };
+    }
+
+    function initStars() {
+      stars = [];
+      for (let i = 0; i < 200; i++) {
+        stars.push(createStar());
+      }
+    }
+    initStars();
+
+    function animateStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(star => {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+        ctx.fill();
+
+        star.x += star.speedX;
+        star.y += star.speedY;
+        star.opacity = Math.random() * 0.5 + 0.3;
+
+        if (star.x < 0 || star.x > canvas.width) star.speedX = -star.speedX;
+        if (star.y < 0 || star.y > canvas.height) star.speedY = -star.speedY;
+      });
+      requestAnimationFrame(animateStars);
+    }
+    animateStars();
+  </script>
+  <nav>
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">
+        <img src="https://i.postimg.cc/DyYjYGn3/Chat-GPT-Image-14-2025-22-04-51.png" alt="Логотип Самат Эркебаев" class="nav-logo-img">
+      </a>
+      <div class="hamburger"><i class="fas fa-bars"></i></div>
+      <ul class="nav-menu">
+        <li><a href="#hero">Главная</a></li>
+        <li><a href="#about">Обо мне</a></li>
+        <li><a href="#skills">Навыки</a></li>
+        <li><a href="#projects">Проекты</a></li>
+        <li><a href="#achievements">Достижения</a></li>
+        <li><a href="#photos">Фотогалерея</a></li>
+        <li><a href="#testimonials">Отзывы</a></li>
+        <li><a href="#contact">Контакты</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section id="hero" class="hero">
+    <div>
+      <img src="https://i.postimg.cc/PJVpTT5N/01.webp" alt="Самат Эркебаев">
+      <h1 class="typewriter">Самат Эркебаев</h1>
+      <p>Архитектор цифровых миров с 2005 года, вдохновляющий Кыргызстан. Воскресенье, 15 июня 2025, 20:22, я работаю над SmartOsh.</p>
+      <a href="/assets/resume.pdf" class="btn" download>Скачать резюме</a>
+      <a href="#contact" class="btn">Связаться со мной</a>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <h2>Обо мне</h2>
+    <p style="text-align: center; max-width: 800px; margin: 0 auto 30px;">Родился 1 января 2005 года в Оше, Кыргызстан, в семье учителей. В 6 лет начал собирать роботов из LEGO, выиграл школьную выставку в 2018 году. Окончил школу №15 с золотой медалью в 2022 году после победы на олимпиаде по математике. С 2023 года — студент ОшТУ, фрилансер с доходом >150,000 KGS. Мечтаю открыть IT-университет в Оше к 2035 году. Люблю футбол, читаю Ницше и играю в шахматы.</p>
+    <div class="about-grid">
+      <div class="about-card" data-scroll>
+        <h3>Личность</h3>
+        <p>Технолог и мечтатель</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">С 5 лет интерес к технике, с 2021 года код, этичные технологии.</div>
+      </div>
+      <div class="about-card" data-scroll>
+        <h3>Город</h3>
+        <p>Ош, Кыргызстан</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">Планирую IT-центр, вдохновлён историей города.</div>
+      </div>
+      <div class="about-card" data-scroll>
+        <h3>Статус</h3>
+        <p>Студент и фрилансер</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">ОшТУ (2-й курс), 15+ проектов, Upwork, Fiverr, OshTech.</div>
+      </div>
+      <div class="about-card" data-scroll>
+        <h3>Интересы</h3>
+        <p>AI, спорт, философия</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">Футбол (играю за университет), Ницше, шахматы (рейтинг 1600).</div>
+      </div>
+      <div class="about-card" data-scroll>
+        <h3>Цель</h3>
+        <p>Человечные технологии</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">IT-платформа к 2030, университет к 2035.</div>
+      </div>
+      <div class="about-card" data-scroll>
+        <h3>Миссия</h3>
+        <p>Развитие Кыргызстана</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">500 рабочих мест к 2027, IT-образование для сельских школ.</div>
+      </div>
+      <div class="about-card" data-scroll>
+        <h3>Семья</h3>
+        <p>Поддержка родителей</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">Отец учит математике 20 лет, мать — история, поддерживают с 2005.</div>
+      </div>
+      <div class="about-card" data-scroll>
+        <h3>Детство</h3>
+        <p>Первые шаги в науке</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">В 6 лет выиграл школьный конкурс поделок, увлёкся техникой.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="skills">
+    <h2>Навыки</h2>
+    <div class="skills-grid">
+      <div class="skill-card" data-scroll>
+        <h3>Python</h3>
+        <p>GUI, веб, AI</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">Tkinter, Flask, Django, pyttsx3, OpenCV, TensorFlow, 40% оптимизация, 10+ проектов.</div>
+      </div>
+      <div class="skill-card" data-scroll>
+        <h3>Frontend</h3>
+        <p>React, Next.js</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">Tailwind CSS, 25% ускорение, адаптивность, Galeria360.</div>
+      </div>
+      <div class="skill-card" data-scroll>
+        <h3>Базы данных</h3>
+        <p>PostgreSQL, Firebase</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">MongoDB, SQLite, MySQL, 30% улучшение, 5+ баз.</div>
+      </div>
+      <div class="skill-card" data-scroll>
+        <h3>ИИ и ML</h3>
+        <p>Голос, зрение</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">SpeechRecognition, OpenCV (85%), MediaPipe, PyTorch, face recognition, AI Tutor.</div>
+      </div>
+      <div class="skill-card" data-scroll>
+        <h3>Кибербезопасность</h3>
+        <p>Nmap, Cisco</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">Wireshark, Kali Linux, Metasploit, 5 устранённых уязвимостей, аудит 2024.</div>
+      </div>
+      <div class="skill-card" data-scroll>
+        <h3>DevOps</h3>
+        <p>Git, Linux, Docker</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">AWS, Jenkins, Kubernetes, 50% ускорение деплоя, CI/CD.</div>
+      </div>
+      <div class="skill-card" data-scroll>
+        <h3>Мобильная разработка</h3>
+        <p>Android, Flutter</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">КИНГСМЕН App, базовый Dart, 2 проекта.</div>
+      </div>
+      <div class="skill-card" data-scroll>
+        <h3>Дизайн</h3>
+        <p>Figma, Adobe XD</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">UI/UX для Galeria360, 10 макетов.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="projects">
+    <h2>Проекты</h2>
+    <div class="projects-grid">
+      <div class="project-card" data-scroll>
+        <h3>Sakura AI Assistant</h3>
+        <p>Голосовой ассистент</p>
+        <p class="tech">Python, Tkinter, pyttsx3</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">90% точность, 50+ пользователей, Telegram в планах, фото: <a href="https://via.placeholder.com/1280x720">ссылка</a>.</div>
+      </div>
+      <div class="project-card" data-scroll>
+        <h3>Galeria360</h3>
+        <p>Онлайн-галерея</p>
+        <p class="tech">React, Firebase</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">200+ пользователей, 40% скорость, AI-категоризация, фото: <a href="https://via.placeholder.com/1280x720">ссылка</a>.</div>
+      </div>
+      <div class="project-card" data-scroll>
+        <h3>КИНГСМЕН App</h3>
+        <p>Приложение барбершопа</p>
+        <p class="tech">Android, Java</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">100+ клиентов, +35% вовлечённости, Stripe, фото: <a href="https://via.placeholder.com/1280x720">ссылка</a>.</div>
+      </div>
+      <div class="project-card" data-scroll>
+        <h3>Образовательный eBook</h3>
+        <p>Учебник по алгебре</p>
+        <p class="tech">Python, PDFKit</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">300+ школьников, +20% результатов, онлайн-версия, фото: <a href="https://via.placeholder.com/1280x720">ссылка</a>.</div>
+      </div>
+      <div class="project-card" data-scroll>
+        <h3>Робо-Бой</h3>
+        <p>Игра с жестами</p>
+        <p class="tech">Python, OpenCV</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">80% точность, 50+ тестов, AR-версия, фото: <a href="https://via.placeholder.com/1280x720">ссылка</a>.</div>
+      </div>
+      <div class="project-card" data-scroll>
+        <h3>SmartOsh</h3>
+        <p>Умный город</p>
+        <p class="tech">React, Node.js</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">100 тестов, мониторинг трафика, фото: <a href="https://via.placeholder.com/1280x720">ссылка</a>.</div>
+      </div>
+      <div class="project-card" data-scroll>
+        <h3>AI Tutor</h3>
+        <p>Онлайн-учитель</p>
+        <p class="tech">Python, Flask</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">50 уроков, 88% точность, фото: <a href="https://via.placeholder.com/1280x720">ссылка</a>.</div>
+      </div>
+      <div class="project-card" data-scroll>
+        <h3>OshMap</h3>
+        <p>Карта Оша</p>
+        <p class="tech">React, Google Maps API</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">50+ POI, 2025, фото: <a href="https://via.placeholder.com/1280x720">ссылка</a>.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="achievements" class="achievements">
+    <h2>Достижения</h2>
+    <div class="achievements-grid">
+      <div class="achievement-card" data-scroll>
+        <h3>Хакатон</h3>
+        <p>1-е место, 2024</p>
+        <p class="context">Ош</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">Sakura AI, грант 50,000 KGS, 48 часов, фото медали: <a href="https://via.placeholder.com/1280x720">ссылка</a>.</div>
+      </div>
+      <div class="achievement-card" data-scroll>
+        <h3>Отличник ОшТУ</h3>
+        <p>2023–2025</p>
+        <p class="context">Академия</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">4.8/5.0, доклад об ИИ, фото диплома: <a href="https://via.placeholder.com/1280x720">ссылка</a>.</div>
+      </div>
+      <div class="achievement-card" data-scroll>
+        <h3>IT-курсы</h3>
+        <p>Для школьников, 2024</p>
+        <p class="context">Ош</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">30 учеников, 80% продолжили, благодарность мэрии, фото: <a href="https://via.placeholder.com/1280x720">ссылка</a>.</div>
+      </div>
+      <div class="achievement-card" data-scroll>
+        <h3>Грант</h3>
+        <p>50,000 KGS, 2024</p>
+        <p class="context">ИИ-проект</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">От государства, инвестиции в Sakura AI, фото: <a href="https://via.placeholder.com/1280x720">ссылка</a>.</div>
+      </div>
+      <div class="achievement-card" data-scroll>
+        <h3>Олимпиада</h3>
+        <p>1-е место, 2021</p>
+        <p class="context">Математика</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">Региональный этап, приз 10,000 KGS, фото медали: <a href="https://via.placeholder.com/1280x720">ссылка</a>.</div>
+      </div>
+      <div class="achievement-card" data-scroll>
+        <h3>Волонтёр</h3>
+        <p>IT-лагерь, 2023</p>
+        <p class="context">Ош</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">50 участников, обучение Python, фото: <a href="https://via.placeholder.com/1280x720">ссылка</a>.</div>
+      </div>
+      <div class="achievement-card" data-scroll>
+        <h3>Физика</h3>
+        <p>2-е место, 2015</p>
+        <p class="context">Олимпиада</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">Приз 5,000 KGS, школа №15, фото: <a href="https://via.placeholder.com/1280x720">ссылка</a>.</div>
+      </div>
+      <div class="achievement-card" data-scroll>
+        <h3>IT-семинар</h3>
+        <p>Организатор, 2024</p>
+        <p class="context">Ош</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">100 участников, фото: <a href="https://via.placeholder.com/1280x720">ссылка</a>.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="photos" class="photos">
+    <h2>Фотогалерея</h2>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="https://via.placeholder.com/1920x1080" alt="Photo 1">
+          <div class="swiper-slide-caption">Хакатон, Ош, 2024</div>
+        </div>
+        <div class="swiper-slide">
+          <img src="https://via.placeholder.com/1600x900" alt="Photo 2">
+          <div class="swiper-slide-caption">IT-курсы, 2024</div>
+        </div>
+        <div class="swiper-slide">
+          <img src="https://i.postimg.cc/2jTry0Fd/001.jpg" alt="Photo 3">
+          <div class="swiper-slide-caption">Ош, 2023</div>
+        </div>
+        <div class="swiper-slide">
+          <img src="https://via.placeholder.com/1280x720" alt="Photo 4">
+          <div class="swiper-slide-caption">Команда, 2025</div>
+        </div>
+        <div class="swiper-slide">
+          <img src="https://via.placeholder.com/1024x768" alt="Photo 5">
+          <div class="swiper-slide-caption">Разработка, 2025</div>
+        </div>
+        <div class="swiper-slide">
+          <img src="https://via.placeholder.com/800x600" alt="Photo 6">
+          <div class="swiper-slide-caption">Олимпиада, 2021</div>
+        </div>
+        <div class="swiper-slide">
+          <img src="https://via.placeholder.com/1200x800" alt="Photo 7">
+          <div class="swiper-slide-caption">ОшТУ, 2024</div>
+        </div>
+        <div class="swiper-slide">
+          <img src="https://via.placeholder.com/1440x900" alt="Photo 8">
+          <div class="swiper-slide-caption">IT-лагерь, 2023</div>
+        </div>
+        <div class="swiper-slide">
+          <img src="https://via.placeholder.com/1920x1200" alt="Photo 9">
+          <div class="swiper-slide-caption">Футбол, 2025</div>
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </section>
+
+  <section id="testimonials" class="testimonials">
+    <h2>Отзывы</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card" data-scroll>
+        <h3>Преподаватель ОшТУ</h3>
+        <p>"Самат — талант!"</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">Sakura AI — инновация, вдохновляет студентов, 2024.</div>
+      </div>
+      <div class="testimonial-card" data-scroll>
+        <h3>Клиент КИНГСМЕН</h3>
+        <p>"Профессионал!"</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">+35% дохода, надёжный, 2024.</div>
+      </div>
+      <div class="testimonial-card" data-scroll>
+        <h3>Коллега</h3>
+        <p>"Креативен!"</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">Galeria360 — новый уровень, 2025.</div>
+      </div>
+      <div class="testimonial-card" data-scroll>
+        <h3>Ученик IT-курсов</h3>
+        <p>"Отличный учитель!"</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">Научил Python, изменил мою жизнь, 2024.</div>
+      </div>
+      <div class="testimonial-card" data-scroll>
+        <h3>Клиент Upwork</h3>
+        <p>"Отлично сдал проект!"</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">AI-система, 5 звёзд, 2025.</div>
+      </div>
+      <div class="testimonial-card" data-scroll>
+        <h3>Родитель ученика</h3>
+        <p>"Спасибо за eBook!"</p>
+        <button class="btn details-btn" onclick="toggleDetails(this)">Подробнее</button>
+        <div class="details">Сын улучшил оценки, 2024.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2>Контакты</h2>
+    <form id="contact-form">
+      <input type="text" name="name" placeholder="Ваше имя" required>
+      <input type="email" name="email" placeholder="Ваша почта" required>
+      <textarea name="message" placeholder="Ваше сообщение" required></textarea>
+      <button type="submit" class="btn">Отправить</button>
+    </form>
+    <div class="social-links">
+      <a href="https://t.me/ESA_Kg" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+      <a href="https://www.instagram.com/e.s.a.0.0" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://github.com/ESAkg" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="mailto:esakg01@gmail.com"><i class="fas fa-envelope"></i></a>
+      <a href="https://www.linkedin.com/in/esakg" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="tel:+996706063616"><i class="fas fa-phone"></i></a>
+      <a href="https://wa.me/996222063616" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    </div>
+    <p style="text-align: center; margin-top: 20px;">Офис: ул. Ленина 45, Ош, Кыргызстан<br>Часы работы: 9:00–18:00 (Пн-Пт)<br>Экстренный контакт: +996 555 654 321<br>Поддержка: support@esakg.com</p>
+  </section>
+
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+  <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+  <script src="https://kit.fontawesome.com/6ca6c4a110.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    emailjs.init("service_29o3ry9");
+
+    const text = document.querySelector('.typewriter');
+    const textContent = text.textContent;
+    text.textContent = '';
+    let i = 0;
+    function type() {
+      if (i < textContent.length) {
+        text.textContent += textContent.charAt(i);
+        i++;
+        setTimeout(type, 80);
+      }
+    }
+    type();
+
+    gsap.from('.hero img', { opacity: 0, scale: 0.8, duration: 1, delay: 0.5 });
+    gsap.from('.hero p', { opacity: 0, y: 30, duration: 1, delay: 1 });
+    gsap.from('.hero .btn', { opacity: 0, y: 20, duration: 1, delay: 1.5, stagger: 0.2 });
+
+    ScrollReveal().reveal('[data-scroll]', {
+      duration: 1000,
+      distance: '50px',
+      origin: 'bottom',
+      easing: 'ease-in-out',
+      interval: 100
+    });
+
+    new Swiper('.swiper-container', {
+      effect: 'cube',
+      cubeEffect: {
+        shadow: false,
+        slideShadows: false
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+      },
+      loop: true,
+      autoplay: {
+        delay: 4000
+      },
+      slidesPerView: 1,
+      spaceBetween: 20,
+      centeredSlides: true
+    });
+
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      emailjs.sendForm('service_29o3ry9', 'service_29o3ry9', 'YddHubDhUxMRW62hi', this)
+        .then(() => {
+          alert('Сообщение отправлено!');
+          this.reset();
+        }, (error) => {
+          alert('Ошибка: ' + error.text);
+        });
+    });
+
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    hamburger.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+        navMenu.classList.remove('active');
+      });
+    });
+
+    function toggleDetails(button) {
+      const details = button.nextElementSibling;
+      const isVisible = details.style.display === 'block';
+      details.style.display = isVisible ? 'none' : 'block';
+      button.textContent = isVisible ? 'Подробнее' : 'Скрыть';
+    }
+  </script>
+</body>
+</html>
