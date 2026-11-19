@@ -131,6 +131,13 @@ section:not(.hero){padding:110px 0 0}
 .project h3{font-size:1.15rem;margin-bottom:8px}
 .project p{color:var(--muted);font-size:.92rem;flex:1}
 .project.featured{grid-column:span 2;background:linear-gradient(135deg,rgba(212,160,23,.14),var(--card) 60%)}
+.status{font-size:.72rem;font-weight:700;color:var(--sc);display:inline-flex;align-items:center;gap:6px}
+.status::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sc)}
+.ptech{font-size:.78rem;color:var(--dim);margin-top:14px}
+.pfoot{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.open-link{margin-top:16px;font-size:.85rem;font-weight:700;text-decoration:none;color:var(--text);padding:6px 12px;border:1px solid var(--line2);border-radius:999px;transition:.2s}
+.open-link:hover{border-color:var(--gold);color:var(--gold2)}
+.tech-line{color:var(--muted)}
 .project.hidden{display:none}
 
 /* достижения */
@@ -255,7 +262,7 @@ footer a:hover{color:var(--gold2)}
       <div>
         <span class="badge"><span class="dot"></span>Открыт для проектов и сотрудничества</span>
         <h1>Самат<br><span class="gold">Эркебаев</span></h1>
-        <p class="lead">Разработчик и основатель бренда <b>ESA</b>. Создаю сайты, игры, мобильные приложения и ИИ-ассистентов. Студент <b>ОшТУ</b>, автор <b>100+ проектов</b>. Моя цель — развивать IT и образование в Кыргызстане.</p>
+        <p class="lead">Разработчик и основатель бренда <b>ESA</b>. Делаю программы для бизнеса, сервисы для студентов <b>ОшТУ</b>, игры и ИИ-инструменты. Автор <b>100+ проектов</b>, больше 20 из них работают онлайн. Моя цель — развивать IT и образование в Кыргызстане.</p>
         <div class="cta">
           <a href="#contact" class="btn btn-gold"><i class="fa-solid fa-paper-plane"></i>Связаться</a>
           <a href="https://docs.google.com/document/d/18Izhx6A0yDBWvVkDps43FczhDbz61boG/edit?usp=sharing" target="_blank" rel="noopener" class="btn btn-ghost"><i class="fa-regular fa-file-lines"></i>Резюме</a>
@@ -273,8 +280,8 @@ footer a:hover{color:var(--gold2)}
     </div>
     <div class="stats reveal" style="margin-top:56px">
       <div class="stat"><b data-count="100">100+</b><span>завершённых проектов</span></div>
-      <div class="stat"><b>10</b><span>направлений в IT</span></div>
-      <div class="stat"><b>8</b><span>грамот и сертификатов</span></div>
+      <div class="stat"><b>20+</b><span>сайтов и приложений онлайн</span></div>
+      <div class="stat"><b>30</b><span>идей в работе (ESA Project Hub)</span></div>
       <div class="stat"><b>2035</b><span>цель — IT-университет в Оше</span></div>
     </div>
   </div>
@@ -290,7 +297,8 @@ footer a:hover{color:var(--gold2)}
       <div class="card reveal">
         <div class="about-text">
           <p>Родился <b>28 сентября 2005 года</b> в селе Жаны-Абад (айыл окмоту Сейдикум, Базар-Коргонский район, Джалал-Абадская область) в семье учителей.</p>
-          <p>В 6 лет начал собирать роботов из LEGO, а в 2018 году выиграл школьную выставку. В <b>2023 году</b> с отличием окончил среднюю школу №37 «Сайдикум» и поступил в <b>Ошский технологический университет</b>. Параллельно с учёбой работаю фрилансером и развиваю свой бренд ESA.</p>
+          <p>В 6 лет начал собирать роботов из LEGO, а в 2018 году выиграл школьную выставку. В <b>2023 году</b> с отличием окончил среднюю школу №37 «Сайдикум» и поступил в <b>Ошский технологический университет</b>. Параллельно с учёбой развиваю свой бренд ESA.</p>
+          <p>Главный продукт ESA — <b>ESA Control</b>, программа для бухгалтерских фирм, в которой уже работают бухгалтеры. Для студентов сделал <b>Расписание ОшТУ</b> (сайт, Android и iOS) и <b>Аналитику аудиторий</b>. Также создаю обучающие сервисы, игры и видео для YouTube-канала ESA MOTION.</p>
           <p>Люблю создавать новое и находить нестандартные решения. В свободное время читаю, рисую, играю на комузе, пишу книги и сценарии, занимаюсь боксом и играю в шахматы.</p>
         </div>
         <div class="facts">
@@ -320,13 +328,14 @@ footer a:hover{color:var(--gold2)}
 <section id="projects">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div><span class="eyebrow">Портфолио</span><h2>Избранные проекты</h2></div>
+      <div><span class="eyebrow">Портфолио · из ESA Project Hub</span><h2>Избранные проекты</h2></div>
       <div class="filters" id="filters">
         <button class="filter on" data-f="all">Все</button>
-        <button class="filter" data-f="ИИ">ИИ</button>
-        <button class="filter" data-f="Веб">Веб</button>
-        <button class="filter" data-f="Приложение">Приложения</button>
-        <button class="filter" data-f="Игра">Игры</button>
+        <button class="filter" data-f="Бизнес">Бизнес</button>
+        <button class="filter" data-f="Образование">Образование</button>
+        <button class="filter" data-f="Сервисы">Сервисы</button>
+        <button class="filter" data-f="Игры">Игры</button>
+        <button class="filter" data-f="Медиа">Медиа</button>
       </div>
     </div>
     <div class="projects-grid" id="projectsGrid"></div>
@@ -432,28 +441,43 @@ const TRAITS = [
 ];
 
 const SKILLS = [
-  {i:"💻", t:"Веб-разработка", s:"Frontend и Backend: от вёрстки до API.", tags:["HTML/CSS","JavaScript","Python","Django","Flask"], d:"<p><b>Frontend:</b> адаптивные, современные и удобные интерфейсы на HTML, CSS и JavaScript.</p><p><b>Backend:</b> Python, Django, Flask — логика, обработка данных, авторизация, безопасность.</p><p><b>API:</b> REST API и подключение сторонних сервисов.</p>"},
+  {i:"💻", t:"Веб-разработка", s:"Frontend и Backend: от вёрстки до API.", tags:["HTML/CSS","JavaScript","Node.js","Python","PWA","Three.js"], d:"<p><b>Frontend:</b> адаптивные, современные и удобные интерфейсы на HTML, CSS и JavaScript.</p><p><b>Backend:</b> Python, Django, Flask — логика, обработка данных, авторизация, безопасность.</p><p><b>API:</b> REST API и подключение сторонних сервисов.</p>"},
   {i:"🤖", t:"ИИ и машинное обучение", s:"ИИ-ассистенты с речью и логикой.", tags:["Python","NLP","Синтез речи"], d:"<ul><li>Создаю ИИ-ассистентов с речевыми и логическими возможностями (проект «Сакура»).</li><li>Основы ML, обработка команд и анализ входных данных.</li><li>Распознавание, генерация текста, поиск ответов на вопросы.</li></ul>"},
   {i:"🎮", t:"Разработка игр", s:"Десятки 2D-игр: логика, физика, анимации.", tags:["Pygame","Godot"], d:"<p>Сделал «Тетрис», «Змейку», «Сапёр», «Танки», 2D-файтинг и другие игры.</p><ul><li>Игровая логика, меню, уровни сложности.</li><li>Счётчики, физика, анимации, переходы.</li><li>Работа с игровыми движками и библиотеками.</li></ul>"},
   {i:"📱", t:"Мобильная разработка", s:"Приложения и игры для Android и iOS.", tags:["Android Studio","Kotlin","Godot"], d:"<ul><li>Мобильные 2D-игры и приложения на Godot и Pygame.</li><li>Оптимизация под Android и iOS.</li><li>Сенсорное управление и удобный интерфейс.</li></ul>"},
-  {i:"🗄️", t:"Базы данных", s:"Проектирование таблиц и запросы.", tags:["SQLite","MySQL","PostgreSQL"], d:"<ul><li>Проектирую таблицы и связи, пишу запросы (CRUD).</li><li>Применяю базы данных в сайтах, ботах, играх и ассистентах.</li></ul>"},
+  {i:"🗄️", t:"Базы данных и облако", s:"Supabase, PostgreSQL, хостинг и автоматизация.", tags:["Supabase","PostgreSQL","Render","Netlify","GitHub Actions"], d:"<ul><li>Проектирую таблицы и связи, настраиваю права доступа (RLS).</li><li>Онлайн-синхронизация, real-time обновления, хранение файлов.</li><li>Автоматический сбор данных по расписанию (pg_cron).</li><li>Публикую проекты на Render, Netlify, Vercel; сборка приложений через GitHub Actions.</li></ul>"},
   {i:"🧠", t:"Речевые интерфейсы", s:"Голосовые и текстовые ассистенты.", tags:["TTS","Команды"], d:"<ul><li>Разработка голосовых и текстовых ассистентов.</li><li>Синтез речи и распознавание текста.</li><li>Управление через команды, автоматическое определение задач.</li></ul>"},
   {i:"🛡️", t:"Кибербезопасность", s:"Базовая защита данных и приложений.", tags:["Хеширование","Авторизация"], d:"<ul><li>Защита данных и проверка пользовательского ввода.</li><li>Авторизация, хеширование, предотвращение уязвимостей.</li></ul>"},
   {i:"🎨", t:"UI/UX и дизайн", s:"Понятные и красивые интерфейсы.", tags:["Адаптив","Анимация"], d:"<ul><li>Логично выстроенные, удобные интерфейсы.</li><li>Цвета, визуальные элементы, анимация.</li><li>Адаптация под разные устройства.</li></ul>"},
   {i:"📈", t:"Бизнес и проекты", s:"Основатель ESA, управление командой.", tags:["Менеджмент","Обучение"], d:"<ul><li>Автор 100+ проектов: сайты, игры, боты, ассистенты, тесты, платформы.</li><li>Основатель бренда ESA, планирую филиалы в Оше и Базар-Коргоне.</li><li>Организую команды, распределяю задачи, нанимаю сотрудников.</li><li>Создаю образовательные программы и курсы.</li></ul>"}
 ];
 
+// Источник: ESA PROJECT HUB (esa-catalog.json). st: live — работает, test — тестирование, dev — в разработке, plan — в планах
 const PROJECTS = [
-  {t:"Город будущего", c:"Бизнес", s:"Самый большой проект: расчёт стоимости строительства и запуска городского комплекса в Кыргызстане.", featured:true, d:"<p>Подробные расчёты всех расходов на постройку и запуск городского комплекса.</p><ul><li>Учёт всех затрат: земля, стройматериалы, инфраструктура.</li><li>Расчёт в долларах по рыночным ценам.</li><li>Подготовка к инвестициям и госфинансированию.</li></ul><p><b>Инструменты:</b> Excel, Google Sheets, онлайн-калькуляторы, опросы рынка.</p>"},
-  {t:"Сакура 1.1", c:"ИИ", s:"ИИ-ассистент, который отвечает на вопросы и озвучивает ответы.", d:"<p>Умный ассистент с текстовым интерфейсом. Понимает команды, отвечает на обычные, логические и математические вопросы, озвучивает ответы синтезом речи.</p><p><b>Технологии:</b> Python, ИИ, обработка текста, синтез речи.</p>"},
-  {t:"Galeria360", c:"Веб", s:"Онлайн-платформа для фото и видео.", d:"<ul><li>Регистрация и авторизация.</li><li>Загрузка и просмотр медиа с эффектами.</li><li>Комментарии, оценки, поиск.</li><li>Многоязычный интерфейс и админ-панель.</li></ul><p><b>Технологии:</b> React, Next.js, TailwindCSS, Django/NestJS, PostgreSQL, Cloudinary, JWT.</p>"},
-  {t:"КИНГСМЕН App", c:"Приложение", s:"Мобильное приложение для барбершопа.", d:"<ul><li>Запись на стрижку в двух режимах.</li><li>Напоминания клиентам, которые давно не приходили.</li><li>Отзывы, карта, контакты.</li><li>Админ-панель: мастера, услуги, график.</li><li>PDF-отчёты за день, неделю, месяц.</li></ul><p><b>Технологии:</b> Android Studio, Java/Kotlin, Firebase/SQLite.</p>"},
-  {t:"Тесты с биометрией", c:"Приложение", s:"Система онлайн-тестирования с проверкой личности через камеру.", d:"<ul><li>Вход по ID и паролю.</li><li>Биометрическая проверка через камеру.</li><li>Автоматический подсчёт баллов, рейтинг, статистика.</li><li>Админ-панель для добавления тестов.</li></ul><p><b>Технологии:</b> Python, OpenCV, SQLite, Tkinter.</p>"},
-  {t:"Робо-Бой", c:"Игра", s:"Два игрока управляют роботами движениями рук через камеру.", d:"<ul><li>Управление жестами с помощью ИИ.</li><li>Соединение по Bluetooth/Wi-Fi.</li><li>Очки, здоровье, пауза при потере отслеживания.</li></ul><p><b>Технологии:</b> Python, MediaPipe, OpenCV, Pygame.</p>"},
-  {t:"Гостиница ESA", c:"Веб", s:"Стильный сайт гостиницы с онлайн-бронированием.", d:"<ul><li>Онлайн-бронирование.</li><li>Каталог номеров с фото.</li><li>Карта, отзывы, видеообзор.</li><li>Панель администратора.</li></ul><p>Чёрно-золотая палитра, адаптивная вёрстка, плавные переходы.</p>"},
-  {t:"Система для АЗС", c:"Приложение", s:"Цифровое управление автозаправочными станциями.", d:"<ul><li>Регистрация и авторизация.</li><li>Управление АЗС, операциями и топливом.</li><li>Защита данных, база клиентов, отчёты.</li></ul><p><b>Технологии:</b> Python, SQLite/PostgreSQL, PyQt/Flask, HTML, CSS, JS.</p>"},
-  {t:"Навигация ОшТУ", c:"Веб", s:"Навигация по корпусам и аудиториям университета.", d:"<ul><li>Карта корпусов и аудиторий.</li><li>Поиск по кабинетам.</li><li>QR-навигация.</li></ul><p><b>Технологии:</b> HTML, CSS, JavaScript.</p>"}
+  {t:"ESA Control", c:"Бизнес", st:"test", featured:true, s:"SaaS для бухгалтерских фирм: задачи, учёт времени, приём и автоаудит отчётов. Бухгалтеры уже работают в системе.", tech:"HTML/JS · PWA · Supabase · Excel", u:"https://esa-control.onrender.com", d:"<p>Система контроля бухгалтерского аутсорсинга. ESA продаёт программу фирмам: у каждого сотрудника свой кабинет, руководитель видит всех.</p><ul><li>Задачник: сотни задач, просрочки, «горит сегодня», на проверке.</li><li>Учёт рабочего времени.</li><li>Загрузка отчётов Excel (Форма 161, ОСВ, НсП, НДС), приём в 2 шага с отменой.</li><li>Автоаудит и поиск ошибок с точной строкой, возврат файла с выделением.</li><li>План на месяц, налоговый календарь, импорт клиентов из Excel.</li><li>Устанавливается как приложение, онлайн-база данных.</li></ul>"},
+  {t:"Расписание ОшТУ", c:"Образование", st:"test", featured:true, s:"Приложение расписания университета: сайт, Android с виджетом и iOS. Само обновляется с портала ОшТУ.", tech:"PWA · Android · iOS SwiftUI · Supabase", u:"https://oshtu-schedule.onrender.com", d:"<p>Неофициальное приложение расписания ОшТУ (версия 1.2).</p><ul><li>Сайт, Android-приложение с настоящим виджетом и iOS-приложение.</li><li>Расписание по группе, преподавателю и аудитории.</li><li>Зачёты, экзамены, экран «Сегодня» с прогрессом пары.</li><li>Верхняя/нижняя неделя, работа без интернета.</li><li>Напоминание за 5/10/15 минут со своей мелодией.</li><li>Автосинхронизация с portal.oshtu.kg каждые 20 минут.</li></ul>"},
+  {t:"Аналитика ОшТУ", c:"Образование", st:"test", s:"Дашборд загрузки аудиторий: тепловая карта, свободные аудитории сейчас, поиск накладок.", tech:"PWA · Supabase · pg_cron", u:"https://oshtu-analytics.onrender.com", d:"<ul><li>Аудитории: всего, занято, пустует; загрузка по корпусам.</li><li>Тепловая карта «день × пара».</li><li>Рейтинг нагрузки преподавателей и групп.</li><li>Поиск свободных аудиторий прямо сейчас и поиск накладок в расписании.</li><li>Данные обновляются с портала каждые 10 минут. Языки: RU / KY / EN.</li></ul>"},
+  {t:"ESA CipherLab", c:"Образование", st:"test", s:"Лаборатория криптографии в браузере: 24 шифра, хеши, RSA, шифрование файлов и фото.", tech:"JavaScript · WebCrypto", u:"https://esa-cipherlab-web.netlify.app", d:"<p>Криптография, которую можно «потрогать». Всё считается прямо в браузере.</p><ul><li>14 модулей, 24 шифра с пошаговым разбором.</li><li>Автоопределение шифра и ключа, частотный анализ.</li><li>Шифрование файлов AES-256-GCM, стеганография в PNG.</li><li>11 хеш-функций, RSA, подписи, эллиптические кривые.</li></ul>"},
+  {t:"ESA Project Hub", c:"Сервисы", st:"dev", s:"Мой центр идей и проектов: Kanban, задачи с дедлайнами, таймер и аналитика часов.", tech:"PWA · Supabase", u:"https://esa-project-hub.netlify.app/", d:"<ul><li>Путь «идея → проект», Kanban по этапам.</li><li>Задачи с дедлайнами, таймер START / PAUSE / FINISH.</li><li>Аналитика рабочих часов, паспорт проекта.</li><li>Поиск по Ctrl+K, 6 тем, языки RU / KY / EN.</li><li>Облачная синхронизация, установка как приложение.</li></ul>"},
+  {t:"OshRest", c:"Бизнес", st:"dev", s:"Места отдыха Ошской области: три сайта для туристов, владельцев и администратора, бронирование.", tech:"Node.js · Supabase Realtime", u:"https://oshrest.onrender.com", d:"<ul><li>Туристы: поиск, карта, избранное, бронь или вопрос.</li><li>Владельцы объектов: заявки в реальном времени со звуком.</li><li>Главный админ: вся база, номера, цены, фото и видео.</li><li>Цена брони считается на сервере, занятые даты блокируются.</li></ul>"},
+  {t:"ESA Auction", c:"Бизнес", st:"dev", s:"Онлайн-аукцион по одной ссылке: лоты с фото и видео, ставки в реальном времени, выгрузка в Excel.", tech:"JavaScript · Excel", u:"https://esa-auction.netlify.app", d:"<ul><li>Создать лот с фото/видео, датами и стартовой ценой.</li><li>Отправить ссылку в WhatsApp или Telegram.</li><li>Участники регистрируются по нику и телефону и делают ставки.</li><li>Таймер, лента ставок, модерация, до 10 аукционов сразу.</li><li>Выгрузка победителя и всех ставок в Excel.</li></ul>"},
+  {t:"ESA Motion Studio", c:"Медиа", st:"test", s:"Студия видео-симуляций для YouTube Shorts: 12 режимов, свои флаги и логотипы, запись видео.", tech:"Canvas · MediaRecorder · Node.js", u:"https://esa-motion.netlify.app", d:"<ul><li>12 режимов: спираль, кольца, гонки и другие.</li><li>Форматы Shorts 9:16, YouTube 16:9 и 1:1, 30/60 FPS.</li><li>Вместо шариков — флаги стран, значки клубов или свои логотипы.</li><li>Музыка и запись готового видео.</li></ul><p>На основе студии работает YouTube-канал ESA MOTION и «фабрика» esa-factory, которая сама рендерит ролики в MP4.</p>"},
+  {t:"Карта активности Кыргызстана", c:"Сервисы", st:"dev", s:"3D-карта соревнования областей: рейтинг, облёт из космоса и видеостудия для Reels.", tech:"Three.js · Supabase", u:"https://kg-activity-map.onrender.com", d:"<ul><li>3D-карта Кыргызстана и рейтинг областей.</li><li>«Найди себя на карте», облёт из космоса.</li><li>Админка для добавления участников с их согласия.</li><li>Видеостудия Reels 9:16 с описанием и хештегами.</li></ul>"},
+  {t:"ROBO BOX", c:"Игры", st:"dev", s:"Бой роботов, которыми управляют движениями тела через камеры телефонов. Есть режим VR.", tech:"Node.js · WebRTC · WebXR", u:"https://robobox.onrender.com", d:"<ul><li>Два телефона-камеры подключаются по QR-коду.</li><li>Ещё два телефона — VR-очки (вид глазами робота) или джойстики.</li><li>Работает онлайн и без интернета по Wi-Fi или Bluetooth.</li><li>Каждый бой записывается в видео со сменой ракурсов.</li></ul>"},
+  {t:"КГ Сити", c:"Игры", st:"dev", s:"3D-город Кыргызстана в браузере: Бишкек, Ош, Баткен, Нарын, Талас и другие.", tech:"Three.js · OpenStreetMap", d:"<p>3D-игра в браузере. Карты городов (Бишкек, Ош, Баткен, Нарын, Талас, Джалал-Абад, Чолпон-Ата) строятся из реальных картографических данных.</p>"},
+  {t:"Кыргызский язык", c:"Образование", st:"dev", s:"Приложения для изучения кыргызского: миссии, истории, обучение по карте страны.", tech:"Vercel · Netlify", u:"https://aktan-akylai.netlify.app", d:"<ul><li><b>tilim</b> — миссии по Кыргызстану: семья, базар, Бишкек, уровень A1.</li><li><b>Тилек</b> — миссии, истории и разговоры.</li><li><b>Актан менен Акылай</b> — учим кыргызский по карте Кыргызстана.</li><li><b>Живой алфавит</b> — буквы и звуки.</li></ul>"},
+  {t:"Регистрация техники", c:"Бизнес", st:"test", s:"Инвентаризация IT-техники: фото с камеры, аналитика, выгрузка в Excel и Word.", tech:"PWA · Supabase · Excel · Word", u:"https://esa-registration.onrender.com", d:"<ul><li>Регистрация сотрудников и кабинетов.</li><li>Фото техники с камеры и технические данные.</li><li>Таблица, аналитика, печать.</li><li>Выгрузка в Excel и анкеты в Word (по одной или все в ZIP).</li></ul>"},
+  {t:"Семейные финансы", c:"Сервисы", st:"test", s:"Общий бюджет семьи и личные кабинеты: доходы, расходы, сравнение периодов.", tech:"PWA · Supabase", u:"https://family-finance-6s09.onrender.com", d:"<ul><li>Общий обзор семьи и личные кабинеты.</li><li>Периоды от дня до трёх лет, сравнение с прошлым периодом.</li><li>Топ-5 категорий расходов, динамика доходов и расходов.</li><li>Кто сколько получил и потратил.</li></ul>"},
+  {t:"PhoneCam", c:"Сервисы", st:"live", s:"Камера телефона на компьютере: сканируешь QR-код — и трансляция уже идёт.", tech:"WebRTC", u:"https://phonecam-svld.onrender.com", d:"<ul><li>QR-код → телефон открывает ссылку → «Включить камеру».</li><li>Основная и фронтальная камера, полный экран, зеркало, звук.</li></ul>"},
+  {t:"ESA Поисковик", c:"Сервисы", st:"live", s:"Поиск по всему компьютеру, в том числе внутри Word, Excel и PDF. Работает с внешнего SSD.", tech:"Python · .exe", d:"<ul><li>Готовая программа .exe — не нужно ставить Python.</li><li>Поиск по имени и внутри файлов: Word, Excel, PowerPoint, PDF, txt, код.</li><li>Режимы «все слова» и «любое слово», выбор области поиска.</li></ul>"},
+  {t:"IT Той — Geeks", c:"Бизнес", st:"live", s:"Лендинг мероприятия IT-академии Geeks в Оше: таймер и форма записи. Выполнен на заказ.", tech:"HTML/JS", u:"https://friendly-frangipane-b828dc.netlify.app", d:"<p>Лендинг на кыргызском языке для бесплатного мероприятия IT-академии Geeks: 4 IT-направления за одно занятие. Таймер до события и форма записи.</p>"},
+  {t:"Сакура 1.1", c:"Сервисы", st:"live", s:"ИИ-ассистент, который отвечает на вопросы и озвучивает ответы голосом.", tech:"Python · ИИ · синтез речи", d:"<p>Умный ассистент с текстовым интерфейсом. Понимает команды, отвечает на обычные, логические и математические вопросы и озвучивает ответы.</p>"},
+  {t:"КИНГСМЕН App", c:"Бизнес", st:"live", s:"Мобильное приложение барбершопа: запись, напоминания клиентам, PDF-отчёты.", tech:"Android · Kotlin · Firebase", d:"<ul><li>Запись на стрижку в двух режимах.</li><li>Напоминания клиентам, которые давно не приходили.</li><li>Админ-панель: мастера, услуги, график.</li><li>PDF-отчёты за день, неделю и месяц.</li></ul>"},
+  {t:"Galeria360", c:"Сервисы", st:"live", s:"Онлайн-платформа для фото и видео с комментариями, оценками и поиском.", tech:"React · Next.js · PostgreSQL", d:"<ul><li>Регистрация и вход.</li><li>Загрузка и просмотр медиа с эффектами.</li><li>Комментарии, оценки, поиск, несколько языков, админ-панель.</li></ul>"},
+  {t:"EcoTree Passport", c:"Сервисы", st:"plan", s:"Учёт деревьев города Ош: карта, паспорт дерева по QR-коду, сообщения жителей.", tech:"Next.js · TypeScript", d:"<ul><li>Интерактивная карта деревьев с фильтрами.</li><li>Цифровой паспорт каждого дерева по QR-коду.</li><li>Жители сообщают о больных и повреждённых деревьях.</li><li>Аналитика и админка для города.</li></ul>"},
+  {t:"Город будущего", c:"Бизнес", st:"plan", s:"Расчёт стоимости строительства и запуска городского комплекса в Кыргызстане.", tech:"Excel · Google Sheets", d:"<ul><li>Учёт всех затрат: земля, стройматериалы, инфраструктура.</li><li>Расчёт в долларах по рыночным ценам.</li><li>Подготовка к инвестициям и госфинансированию.</li></ul>"}
 ];
+const STATUS = {live:["Готов","#3ddc84"], test:["Работает · тест","#5cc8ff"], dev:["В разработке","#f0c75e"], plan:["В планах","#a3a09a"]};
 
 const ACH = [
   {y:"2025", t:"Научная конференция", p:"ОшТУ", u:"https://drive.google.com/file/d/1f7Tvmvg593nPA_kUHIUz5PmCs7y3tDuh/view"},
@@ -495,7 +519,12 @@ const addD = (t, s, d) => DETAILS.push({t, s, d}) - 1;
 
 $('#traits').innerHTML = TRAITS.map(x => `<div class="card click trait reveal" data-d="${addD(x.t,x.s,x.d)}"><div class="ico"><i class="fa-solid ${x.icon}"></i></div><h3>${x.t}</h3><p>${x.s}</p>${more}</div>`).join('');
 $('#skillsGrid').innerHTML = SKILLS.map(x => `<div class="card click skill reveal" data-d="${addD(x.i+' '+x.t,x.s,x.d)}"><span class="ico">${x.i}</span><h3>${x.t}</h3><p>${x.s}</p><div class="tags">${x.tags.map(g=>`<span class="tag">${g}</span>`).join('')}</div></div>`).join('');
-$('#projectsGrid').innerHTML = PROJECTS.map((x,i) => `<div class="card click project reveal${x.featured?' featured':''}" data-cat="${x.c}" data-d="${addD(x.t,x.c,x.d)}"><div class="top"><span class="cat">${x.c}</span><span class="num">${String(i+1).padStart(2,'0')}</span></div><h3>${x.t}</h3><p>${x.s}</p>${more}</div>`).join('');
+$('#projectsGrid').innerHTML = PROJECTS.map((x,i) => {
+  const [sl, sc] = STATUS[x.st];
+  const open = x.u ? `<a class="open-link" href="${x.u}" target="_blank" rel="noopener">Открыть <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : '';
+  const body = x.d + `<p class="tech-line"><b>Технологии:</b> ${x.tech}</p>` + (x.u ? `<p><a class="btn btn-gold" href="${x.u}" target="_blank" rel="noopener">Открыть проект <i class="fa-solid fa-arrow-up-right-from-square"></i></a></p>` : '');
+  return `<div class="card click project reveal${x.featured?' featured':''}" data-cat="${x.c}" data-d="${addD(x.t, x.c+' · '+sl, body)}"><div class="top"><span class="cat">${x.c}</span><span class="status" style="--sc:${sc}">${sl}</span></div><h3>${x.t}</h3><p>${x.s}</p><div class="ptech">${x.tech}</div><div class="pfoot">${more}${open}</div></div>`;
+}).join('');
 $('#achGrid').innerHTML = ACH.map(x => `<div class="card ach reveal"><div class="year">${x.y}</div><h3>${x.t}</h3><p>${x.p}</p><a class="more" href="${x.u}" target="_blank" rel="noopener">Документ <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>`).join('');
 $('#galleryGrid').innerHTML = PHOTOS.map((u,i) => `<button class="reveal" data-i="${i}" aria-label="Открыть фото ${i+1}"><img src="${u}" alt="Фото ${i+1}" loading="lazy"></button>`).join('');
 $('#reviewsGrid').innerHTML = REVIEWS.map(x => `<div class="card review reveal"><div class="stars">★★★★★</div><q>${x.q}</q><p>${x.p}</p><div class="who"><span class="av"><i class="fa-solid fa-user"></i></span>${x.w}</div></div>`).join('');
@@ -504,7 +533,7 @@ $('#year').textContent = new Date().getFullYear();
 // модалка с подробностями
 const modal = $('#modal');
 document.addEventListener('click', e => {
-  const c = e.target.closest('[data-d]');
+  const c = e.target.closest('a') ? null : e.target.closest('[data-d]');
   if (c) { const d = DETAILS[c.dataset.d]; $('#mTitle').textContent = d.t; $('#mSub').textContent = d.s; $('#mBody').innerHTML = d.d; open(modal); }
   if (e.target.closest('[data-close]') || e.target.classList.contains('modal')) closeAll();
 });
